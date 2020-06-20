@@ -106,7 +106,23 @@ changeTabFun = (data) => {
         editData: data,
         edit: true
     })
-    
+    // For Edit Data form filling
+    this.state.details.ad_id.value = data.ad_id
+    this.state.details.startdate = dateformat(data.startdate, "yyyy-mm-dd")
+    this.state.details.enddate = dateformat(data.enddate, "yyyy-mm-dd")
+    this.state.details.adtotaldays.value = data.adtotaldays
+    this.state.details.adtotaldays.value = data.adtotaldays
+    this.state.details.adsize.value = data.adsize
+    this.state.details.adlocationId.value = data.adlocationId
+    this.state.details.adfeeperday.value = data.adfeeperday
+    this.state.details.adtotalcost.value = data.adtotalcost
+    this.state.details.imageArray.value = data.imageArray
+    // this.state.details.deal_amt.value = data.deal_amount
+    // this.state.dealActive = data.deal_active === 1 ? true : false
+    // this.state.dealOption = data.deal_options === "Amount" ? "M" : "F"
+    // this.state.deal_valid_from = dateformat(data.deal_valid_from, "yyyy-mm-dd")
+    // this.state.deal_valid_to = dateformat(data.deal_valid_to, "yyyy-mm-dd")
+    this.setState({})
 
 }
 // changeDate = startdate=>
@@ -359,7 +375,7 @@ render()
                 
                         <TabPane tab="Ad List" key="2">
                             <AdvertiseList
-                            //    changeTab={(data) => this.changeTabFun(data)}
+                         changeTab={(data) => this.changeTabFun(data)}
                                />
                         </TabPane>
                     </Tabs>

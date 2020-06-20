@@ -167,7 +167,8 @@ export default class DealList extends React.Component{
                                     <h5 className="full_half_div">{bookingDetails.ad_filename}</h5>
                                         <div>
                                             <img src={Workflow} className="listdelete_icon" />
-                                            <EditIcon className="list_edit" />
+                                            <EditIcon className="list_edit" 
+                                            onClick={() => this.props.changeTab(val)}/>
                                             <DeleteIcon className="listdelete_icon" 
                                             onClick={this.handleDelete} />
                                         </div>
