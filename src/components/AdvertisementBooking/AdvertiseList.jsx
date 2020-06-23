@@ -17,8 +17,8 @@ import Axios from 'axios';
 import apiservice from '../../apiservices';
 import { apiurl, imageUrl } from "../../App";
 import { Chart, Axis, Legend, Tooltip, Geom } from 'bizcharts';
-​
-​
+
+
 const data = [
     { month: 'Jan.', count: 69, city: 'tokyo' }
 ];
@@ -26,9 +26,9 @@ const scale = {
     month: { alias: 'Month', },
     count: { alias: 'Sales', },
 };
-​
-​
-​
+
+
+
 export default class DealList extends React.Component{
     constructor(props) {
         super(props)
@@ -37,65 +37,49 @@ export default class DealList extends React.Component{
                 id: '',
               
         details:[
-            {
-                id: "",
-                // ad_title: ad test,
-                ad_start_date: "",
-                ad_end_date: "",
-                ad_total_days: "",
-                ad_size: "",
-                ad_location_id: "",
-                ad_fee_per_day: "",
-                ad_total_cost: "",
-                ad_filename: null,
-                ad_vendor_id: 1,
-                created_by: 1,
-                created_on: "2020-04-16 05:24:53",
-                modified_by: 1,
-                modified_on: "2020-04-16 05:24:53",
-                ipaddress: "126.183.0.1",
-                ad_approve_status: "",
-                ad_approval_time: null,
-                business_days: ""
-            }
+            // {
+            //     id: "",
+            //     // ad_title: ad test,
+            //     ad_start_date: "",
+            //     ad_end_date: "",
+            //     ad_total_days: "",
+            //     ad_size: "",
+            //     ad_location_id: "",
+            //     ad_fee_per_day: "",
+            //     ad_total_cost: "",
+            //     ad_filename: null,
+            //     ad_vendor_id: 1,
+            //     created_by: 1,
+            //     created_on: "2020-04-16 05:24:53",
+            //     modified_by: 1,
+            //     modified_on: "2020-04-16 05:24:53",
+            //     ipaddress: "126.183.0.1",
+            //     ad_approve_status: "",
+            //     ad_approval_time: null,
+            //     business_days: ""
+            // }
          ]
     }
 }
-​
-​
-    getAdBooking=()=>{
-        Axios({
-            method: 'POST',
-            url: apiurl + 'getAdBooking'
-            
-          })//if your using axios no need of conversion to json
-          .then((response) =>{//2.getting json response in another promise function called .then function
-              var data=response.data
-              console.log("response",data)
-         
-          console.log("data", data)
-            
-            if(data.status==1){//checking success response = 1
-              this.setState({details: data.data})
-            }
-            // else{} send the error response = 0
-            console.log("details",this.state.details)
-          })
-    }
-​
+
+
+componentWillMount() {
+    this.props.getAdBooking()
+}
+
     handleOpen = () => {
         this.setState({ open: true })
     }
     handleClose = () => {
         this.setState({ open: false })
     }
-​
-​
+
+
     handleChange = event => {
         this.setState({ id: event.target.value });
       }
-​
-​
+
+
       handleDelete = (details) => {
         Axios({
             method: 'POST',
@@ -113,14 +97,16 @@ export default class DealList extends React.Component{
         })
         console.log("deletedetails", details)
     }
-​
-​
+
+
     render(){
         return(
          <>
             <div className="location_add_container">
-        
-                {this.state.details.map((bookingDetails) => {
+            {
+                                this.props.details && this.props.details.length > 0 &&
+                                this.props.details.map((bookingDetails) => {
+                // {this.state.details.map((bookingDetails) => {
                     return(
                         <div className="Ad_location_container">
                         <div className="advertise_addlist_items">
@@ -168,7 +154,8 @@ export default class DealList extends React.Component{
                                         <div>
                                             <img src={Workflow} className="listdelete_icon" />
                                             <EditIcon className="list_edit" 
-                                            onClick={() => this.props.changeTab(val)}/>
+                                            onClick={() => this.props.changeTab(bookingDetails)}
+                                            />
                                             <DeleteIcon className="listdelete_icon" 
                                             onClick={this.handleDelete} />
                                         </div>
@@ -179,12 +166,12 @@ export default class DealList extends React.Component{
                     </div>
                     )
                 })}
-​
-​
+
+
             </div>
-​
+
              
-​
+
              
                         
                           
@@ -195,11 +182,11 @@ export default class DealList extends React.Component{
                             <DeleteMedia />
                         </Modalcomp>
                 </div>
-​
-​
+
+
                 </>
-​
-​
+
+
        
                
                     

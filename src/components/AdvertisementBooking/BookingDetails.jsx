@@ -96,10 +96,7 @@ super(props)
 //   };
 
 
-// handleFile= event => {
-//     let ad_file =event.target.value
-//     this.setState({imageArray:ad_file})
-// }
+// 
 changeTabFun = (data) => {
     this.setState({
         activeKey: "1",
@@ -209,7 +206,7 @@ handleChange = event => {
         advendorId: 1,
         createdby: 1,
         ipaddress: "126.183.0.1",
-        ad_approve_status: "R",
+        ad_approve_status: "",
         ad_approval_time: null,
         createdon: dateformat(new Date(), "yyyy-mm-dd"),
         modifiedby: 1,
@@ -218,6 +215,9 @@ handleChange = event => {
         if (this.state.edit === false) {
             alert("True")
             this.insertAdBooking(details)
+        } else {
+            alert("false")
+            this.editAdBooking (details)
         }
         //  else {
         //     alert("false")
@@ -235,8 +235,38 @@ handleChange = event => {
         }).then((response) => {
             console.log(response)
             // this.resetFormValue()
-            this.getDealsList()
+            this.getAdBooking()
 
+        }).catch((error) => {
+            alert(JSON.stringify(error))
+        })
+    }
+
+    editAdBooking = (details) => {
+        Axios({
+            method: "POST",
+            url: apiurl + "editAdBooking ",
+            data: {
+                id: this.state.editData.id,
+                ...details
+            }
+        }).then((response) => {
+            alert(JSON.stringify(response))
+            // this.resetFormValue()
+            this.getAdBooking()
+        }).catch((error) => {
+            alert(JSON.stringify(error))
+        })
+    }
+
+    getAdBooking = () => {
+        Axios({
+            method: 'POST',
+            url: apiurl + 'getAdBooking',
+        }).then((response) => {
+            this.setState({
+                details: response.data.data
+            })
         }).catch((error) => {
             alert(JSON.stringify(error))
         })
@@ -375,6 +405,8 @@ render()
                 
                         <TabPane tab="Ad List" key="2">
                             <AdvertiseList
+                             AdvertiseList={this.state.details} // list data
+                             getAdvertiseList={this.getAdBooking} // get api function
                          changeTab={(data) => this.changeTabFun(data)}
                                />
                         </TabPane>
